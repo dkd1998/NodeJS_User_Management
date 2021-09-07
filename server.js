@@ -45,6 +45,7 @@ app.post('/user/register', upload.single('profile'), async (req, res) => {
     return res.status(409).send("A user with specified email already exists, please login");
   try {
     let file_path = __dirname + "\\" + req.file.path;
+    file_path = file_path.replace(/\\/g,"/");
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
     const user = { id: id, name: req.body.name, email: req.body.email, contact: req.body.contact, password: hashedPassword, profile_path: file_path };
     id++;
